@@ -1,0 +1,218 @@
+esphome:
+  name: "esphome-thread-cv"
+
+esp32:
+  board: esp32-c6-devkitm-1
+  framework:
+    type: esp-idf
+
+network:
+  enable_ipv6: true
+
+openthread:
+  device_type: FTD
+  tlv: "your-tlv-here"
+
+logger:
+
+api:
+  encryption:
+    key: "your-random-key-here"
+
+ota:
+  platform: esphome
+  password: "your-random-password-here"
+
+external_components:
+  - source: github://jghaanstra/esphome-remeha
+    components: [remeha]
+
+uart:
+  id: uart_bus
+  baud_rate: 9600
+  tx_pin: GPIO15
+  rx_pin: GPIO13
+  stop_bits: 1
+
+remeha:
+  id: remeha_component
+  uart_id: uart_bus
+  update_interval: 15s
+
+text_sensor:
+  - platform: template
+    id: boiler_state_txt
+    name: "Boiler state"
+  - platform: template
+    id: boiler_substate_txt
+    name: "Boiler sub-state"
+
+sensor:
+  - platform: remeha
+    remeha_id: remeha_component
+
+    boiler_state:
+      id: boiler_state_num
+      name: "Boiler state (numeric)"
+      on_value:
+        then:
+          - lambda: |-
+              auto s = id(boiler_state_num).state;
+              if      (s == 0)  id(boiler_state_txt).publish_state("0:Standby");
+              else if (s == 1)  id(boiler_state_txt).publish_state("1:Boiler start");
+              else if (s == 2)  id(boiler_state_txt).publish_state("2:Burner start");
+              else if (s == 3)  id(boiler_state_txt).publish_state("3:Burning CH");
+              else if (s == 4)  id(boiler_state_txt).publish_state("4:Burning DHW");
+              else if (s == 5)  id(boiler_state_txt).publish_state("5:Burner stop");
+              else if (s == 6)  id(boiler_state_txt).publish_state("6:Boiler stop");
+              else if (s == 7)  id(boiler_state_txt).publish_state("7:-");
+              else if (s == 8)  id(boiler_state_txt).publish_state("8:Controlled stop");
+              else if (s == 9)  id(boiler_state_txt).publish_state("9:Blocking mode");
+              else if (s == 10) id(boiler_state_txt).publish_state("10:Locking mode");
+              else if (s == 11) id(boiler_state_txt).publish_state("11:Chimney mode L");
+              else if (s == 12) id(boiler_state_txt).publish_state("12:Chimney mode h");
+              else if (s == 13) id(boiler_state_txt).publish_state("13:Chimney mode H");
+              else if (s == 15) id(boiler_state_txt).publish_state("15:Manual heat demand");
+              else if (s == 16) id(boiler_state_txt).publish_state("16:Boiler frost protection");
+              else if (s == 17) id(boiler_state_txt).publish_state("17:De-aeration");
+              else              id(boiler_state_txt).publish_state("Unknown");
+    sub_state:
+      id: boiler_substate_num
+      name: "Boiler sub-state (numeric)"
+      on_value:
+        then:
+          - lambda: |-
+              auto s = id(boiler_substate_num).state;
+              if      (s == 0)  id(boiler_substate_txt).publish_state("0:Standby");
+              else if (s == 1)  id(boiler_substate_txt).publish_state("1:Anti-cycling");
+              else if (s == 2)  id(boiler_substate_txt).publish_state("2:Open hydraulic valve");
+              else if (s == 3)  id(boiler_substate_txt).publish_state("3:Pump start");
+              else if (s == 4)  id(boiler_substate_txt).publish_state("4:Wait for burner start");
+              else if (s == 10) id(boiler_substate_txt).publish_state("10:Open external gas valve");
+              else if (s == 11) id(boiler_substate_txt).publish_state("11:Fan to flue gas valve speed");
+              else if (s == 12) id(boiler_substate_txt).publish_state("12:Open flue gas valve");
+              else if (s == 13) id(boiler_substate_txt).publish_state("13:Pre-purge");
+              else if (s == 14) id(boiler_substate_txt).publish_state("14:Wait for release");
+              else if (s == 15) id(boiler_substate_txt).publish_state("15:Burner start");
+              else if (s == 16) id(boiler_substate_txt).publish_state("16:VPS test");
+              else if (s == 17) id(boiler_substate_txt).publish_state("17:Pre-ignition");
+              else if (s == 18) id(boiler_substate_txt).publish_state("18:Ignition");
+              else if (s == 19) id(boiler_substate_txt).publish_state("19:Flame check");
+              else if (s == 20) id(boiler_substate_txt).publish_state("20:Interpurge");
+              else if (s == 30) id(boiler_substate_txt).publish_state("30:Normal internal setpoint");
+              else if (s == 31) id(boiler_substate_txt).publish_state("31:Limited internal setpoint");
+              else if (s == 32) id(boiler_substate_txt).publish_state("32:Normal power control");
+              else if (s == 33) id(boiler_substate_txt).publish_state("33:Gradient control level 1");
+              else if (s == 34) id(boiler_substate_txt).publish_state("34:Gradient control level 2");
+              else if (s == 35) id(boiler_substate_txt).publish_state("35:Gradient control level 3");
+              else if (s == 36) id(boiler_substate_txt).publish_state("36:Flame protection");
+              else if (s == 37) id(boiler_substate_txt).publish_state("37:Stabilisation time");
+              else if (s == 38) id(boiler_substate_txt).publish_state("38:Cold start");
+              else if (s == 39) id(boiler_substate_txt).publish_state("39:Limited power Tfg");
+              else if (s == 40) id(boiler_substate_txt).publish_state("40:Burner stop");
+              else if (s == 41) id(boiler_substate_txt).publish_state("41:Post purge");
+              else if (s == 42) id(boiler_substate_txt).publish_state("42:Fan to flue gas valve speed");
+              else if (s == 43) id(boiler_substate_txt).publish_state("43:Close flue gas valve");
+              else if (s == 44) id(boiler_substate_txt).publish_state("44:Stop fan");
+              else if (s == 45) id(boiler_substate_txt).publish_state("45:Close external gas valve");
+              else if (s == 60) id(boiler_substate_txt).publish_state("60:Pump post running");
+              else if (s == 61) id(boiler_substate_txt).publish_state("61:Pump stop");
+              else if (s == 62) id(boiler_substate_txt).publish_state("62:Close hydraulic valve");
+              else if (s == 63) id(boiler_substate_txt).publish_state("63:Start anti-cycle timer");
+              else if (s == 255) id(boiler_substate_txt).publish_state("255:Reset wait time");
+              else               id(boiler_substate_txt).publish_state("Unknown sub-state");
+    lockout:
+      name: "Boiler lockout"
+    blocking:
+      name: "Boiler blocking"
+
+    flow_temp:
+      name: "Boiler flow temperature"
+    return_temp:
+      name: "Boiler return temperature"
+    outside_temp:
+      name: "Boiler outside temperature"
+    calorifier_temp:
+      name: "Boiler calorifier temperature"
+    boiler_control_temp:
+      name: "Boiler control temperature (internal)"
+    room_temp:
+      name: "Boiler room temperature"
+    ch_setpoint:
+      name: "Boiler CH setpoint"
+    dhw_setpoint:
+      name: "Boiler DHW setpoint"
+    room_temp_setpoint:
+      name: "Boiler room temperature setpoint"
+
+    fan_speed_setpoint:
+      name: "Boiler fan speed setpoint"
+    fan_speed:
+      name: "Boiler fan speed"
+
+    ionisation_current:
+      name: "Boiler ionisation current"
+    internal_setpoint:
+      name: "Boiler internal setpoint"
+    available_power:
+      name: "Boiler available power"
+    pump_percentage:
+      name: "Boiler pump percentage"
+    desired_max_power:
+      name: "Boiler desired max power"
+    actual_power:
+      name: "Boiler actual power"
+
+    demand_source_bit0:
+      name: "Boiler modulating controller connected"
+    demand_source_bit1:
+      name: "Boiler heat demand mod. controller"
+    demand_source_bit2:
+      name: "Boiler heat demand on/off controller"
+    demand_source_bit3:
+      name: "Boiler frost protection"
+    demand_source_bit4:
+      name: "Boiler DHW Eco"
+    demand_source_bit5:
+      name: "Boiler DHW blocking"
+    demand_source_bit6:
+      name: "Boiler anti-legionella"
+    demand_source_bit7:
+      name: "Boiler DHW heat demand"
+
+    hydro_pressure:
+      name: "Boiler water pressure"
+    control_temp:
+      name: "Boiler control temperature"
+    dhw_flowrate:
+      name: "Boiler DHW flow rate"
+
+    hours_run_pump:
+      name: "Boiler hours run pump"
+    hours_run_3way:
+      name: "Boiler hours run 3-way valve"
+    hours_run_ch:
+      name: "Boiler hours run CH"
+    hours_run_dhw:
+      name: "Boiler hours run DHW"
+    power_supply_aval_hours:
+      name: "Boiler power supply available hours"
+    pump_starts:
+      name: "Boiler pump starts"
+    number_of_3way_valve_cycles:
+      name: "Boiler 3-way valve cycles"
+    burner_start_dhw:
+      name: "Boiler burner starts DHW"
+    total_burner_start:
+      name: "Boiler total burner starts"
+    failed_burner_start:
+      name: "Boiler failed burner starts"
+    number_flame_loss:
+      name: "Boiler flame loss count"
+
+  - platform: wifi_signal
+    name: "Boiler WiFi signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "Boiler uptime"
