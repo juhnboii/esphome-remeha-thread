@@ -7,7 +7,7 @@ Based on [jghaanstra/esphome-remeha](https://github.com/jghaanstra/esphome-remeh
 ## Requirements
 
 - ESPHome 2025.2 or higher
-- ESP32 (ESP32-C5, ESP32-C6, or ESP32-H2 because they have Thread radio chip)
+- ESP32 (ESP32-C5, ESP32-C6, or ESP32-H2 because these have a Thread radio chip onboard)
 - UART connection to the boiler at 9600 baud, 8N1
 
 ## Connection schema
