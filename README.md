@@ -26,7 +26,35 @@ RXD 2  ---          |        TX (GPIO15 / D8)
 
 ## Installation
 
-### 1. Add the external component to your YAML
+### 1. Add your TLV to your YAML
+
+HomeAssistant:
+You can find your Thread TLV at Integrations > Thread > (gear icon) > Preferred Network > (info icon) > in the bottom Active Dataset TLVs.
+Copy this long string value, this is your TLV.
+
+```yaml
+openthread:
+  device_type: FTD
+  tlv: "your-tlv-here"
+```
+
+### 2. Add a (random) API encryption key to your YAML
+
+```yaml
+api:
+  encryption:
+    key: "your-random-key-here"
+```
+
+### 3. Add a (random) OTA password to your YAML
+
+```yaml
+ota:
+  platform: esphome
+  password: "your-random-password-here"
+```
+
+### 4. Add the external component to your YAML
 
 ```yaml
 external_components:
@@ -34,7 +62,7 @@ external_components:
     components: [remeha]
 ```
 
-### 2. Define the UART bus
+### 5. Define the UART bus
 
 ```yaml
 uart:
@@ -45,7 +73,7 @@ uart:
   stop_bits: 1
 ```
 
-### 3. Add the boiler hub
+### 6. Add the boiler hub
 
 ```yaml
 remeha:
@@ -54,7 +82,7 @@ remeha:
   update_interval: 15s    # optional, default 15s
 ```
 
-### 4. Configure sensors
+### 7. Configure sensors
 
 All sensors are optional. Only add the sensors you need:
 
