@@ -26,7 +26,16 @@ RXD 2  ---          |        TX (GPIO15 / D8)
 
 ## Installation
 
-### 1. Add your TLV to your YAML
+### 1. Add you board model (ESP32-C5, ESP32-C6 or ESP32-H2)
+
+```yaml
+esp32:
+  board: <your-esp32-model> # [for example: esp32-c6-devkitm-1]
+  framework:
+    type: esp-idf
+```
+
+### 2. Add your TLV
 
 HomeAssistant:
 You can find your Thread TLV at Integrations > Thread > (gear icon) > Preferred Network > (info icon) > in the bottom Active Dataset TLVs.
@@ -38,7 +47,7 @@ openthread:
   tlv: "your-tlv-here"
 ```
 
-### 2. Add a (random) API encryption key to your YAML
+### 3. Add a (random) API encryption key
 
 ```yaml
 api:
@@ -46,7 +55,7 @@ api:
     key: "your-random-key-here"
 ```
 
-### 3. Add a (random) OTA password to your YAML
+### 4. Add a (random) OTA password
 
 ```yaml
 ota:
@@ -54,7 +63,7 @@ ota:
   password: "your-random-password-here"
 ```
 
-### 4. Add the external component to your YAML
+### 5. Add the external component
 
 ```yaml
 external_components:
@@ -62,7 +71,7 @@ external_components:
     components: [remeha]
 ```
 
-### 5. Define the UART bus
+### 6. Define the UART bus
 
 ```yaml
 uart:
@@ -73,7 +82,7 @@ uart:
   stop_bits: 1
 ```
 
-### 6. Add the boiler hub
+### 7. Add the boiler hub
 
 ```yaml
 remeha:
@@ -82,7 +91,7 @@ remeha:
   update_interval: 15s    # optional, default 15s
 ```
 
-### 7. Configure sensors
+### 8. Configure sensors
 
 All sensors are optional. Only add the sensors you need:
 
