@@ -1,0 +1,13 @@
+esp32:
+  board: esp32-c6-devkitc-1
+  flash_size: 16MB
+  variant: esp32c6
+  framework:
+    type: esp-idf
+
+uart:
+  id: uart_bus
+  baud_rate: 9600
+  tx_pin: GPIO15
+  rx_pin: GPIO13
+  stop_bits: 1
