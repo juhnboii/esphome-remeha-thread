@@ -24,7 +24,7 @@ ota:
   password: "your-random-password-here"
 
 external_components:
-  - source: github://jghaanstra/esphome-remeha
+  - source: github://juhnboii/esphome-remeha
     components: [remeha]
 
 uart:
