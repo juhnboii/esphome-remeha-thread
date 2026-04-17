@@ -168,7 +168,7 @@ sensor:
     demand_source_bit1:
       name: "Boiler heat demand mod. controller"
     demand_source_bit2:
-      name: "Boiler heat demand on/off controller"
+      name: "Boiler heat demand on⁄off controller"
     demand_source_bit3:
       name: "Boiler frost protection"
     demand_source_bit4:
