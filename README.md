@@ -1,7 +1,7 @@
 # ESPHome Remeha / Dietrich over Thread
 ESPHome over Thread for Remeha / Dietrich central heating boilers
-Native ESPHome external component for reading out the values of Remeha / De Dietrich central heating boilers.
 
+Native ESPHome external component for reading out the values of Remeha / De Dietrich central heating boilers.
 Based on [jghaanstra/esphome-remeha](https://github.com/jghaanstra/esphome-remeha), rewritten to be used on Thread instead of WiFi
 
 ## Background
