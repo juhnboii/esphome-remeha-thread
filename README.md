@@ -7,20 +7,13 @@ Based on [jghaanstra/esphome-remeha](https://github.com/jghaanstra/esphome-remeh
 ## Requirements
 
 - ESPHome 2025.2 or higher
-- ESP32-C6 (because it has a Thread radio chip onboard)
+- Waveshare ESP32-C6-WROOM-1-NX (because it has a Thread radio chip onboard)
+- Adafruit RS232 Pal (TTL-to-RS232 converter, since the ESP32-C6 only supports TTL)
 - UART connection to the boiler at 9600 baud, 8N1
 
 ## Connection schema
 ```
- Heater Board from top       ESP32-C6
-    4P4C RJ connector
-    
-       +---------+
-GND 4  ---       +--+        GND (GND)
-TXD 3  ---          |        RX (GPIO6)
-RXD 2  ---          |        TX (GPIO7)
-5V  1  ---       +--+        DO NOT CONNECT
-       +---------+
+Will be posted once known
 ```
 
 ## Installation
@@ -29,7 +22,8 @@ RXD 2  ---          |        TX (GPIO7)
 
 ```yaml
 esp32:
-  board: <your-esp32-c6-model> # [for example: esp32-c6-devkitc-1]
+  board: esp32-c6-devkitc-1
+  variant: esp32c6
   framework:
     type: esp-idf
 ```
@@ -171,13 +165,6 @@ See [example-cv-ketel.yaml](example-cv-ketel.yaml) for a complete configuration 
 | `total_burner_start` | — | Total burner starts |
 | `failed_burner_start` | — | Failed burner starts |
 | `number_flame_loss` | — | Flame loss count |
-
-## Migrating from the old custom component configuration
-
-1. Remove `includes: [cv-ketel.h]` from the `esphome:` section
-2. Remove the `external_components` entry for `robertklep/esphome-custom-component`
-3. Remove the `platform: custom` sensor block with the lambda
-4. Add the new `remeha:` hub and `platform: remeha` sensors as described above
 
 ## License
 
