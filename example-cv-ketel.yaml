@@ -2,7 +2,8 @@ esphome:
   name: "esphome-thread-cv"
 
 esp32:
-  board: esp32-c6-devkitm-1
+  board: esp32-c6-devkitc-1
+  variant: esp32c6
   framework:
     type: esp-idf
 
@@ -30,8 +31,8 @@ external_components:
 uart:
   id: uart_bus
   baud_rate: 9600
-  tx_pin: GPIO15
-  rx_pin: GPIO13
+  tx_pin: GPIO6
+  rx_pin: GPIO7
   stop_bits: 1
 
 remeha:
