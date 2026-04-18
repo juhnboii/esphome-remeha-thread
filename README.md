@@ -12,7 +12,7 @@ Based on [jghaanstra/esphome-remeha](https://github.com/jghaanstra/esphome-remeh
 
 ## Connection schema
 ```
- Heater Board from top       ESP8266
+ Heater Board from top       ESP32-C6
     4P4C RJ connector
     
        +---------+
@@ -25,11 +25,11 @@ RXD 2  ---          |        TX (GPIO7)
 
 ## Installation
 
-### 1. Add you board model (ESP32-C5, ESP32-C6 or ESP32-H2)
+### 1. Add you board model (e.g. ESP32-C6-WROOM-1-NX)
 
 ```yaml
 esp32:
-  board: <your-esp32-model> # [for example: esp32-c6-devkitm-1]
+  board: <your-esp32-c6-model> # [for example: esp32-c6-devkitc-1]
   framework:
     type: esp-idf
 ```
