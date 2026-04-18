@@ -210,9 +210,5 @@ sensor:
     number_flame_loss:
       name: "Boiler flame loss count"
 
-  - platform: wifi_signal
-    name: "Boiler WiFi signal"
-    update_interval: 60s
-
   - platform: uptime
     name: "Boiler uptime"
